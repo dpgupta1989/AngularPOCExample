@@ -1,0 +1,51 @@
+<!--<h2 class="mat-h2">comp2 works!</h2>-->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+ <!-- <div class="form-group" class="col-4">
+    &lt;!&ndash;<label for="name">Name</label>&ndash;&gt;
+    <br>
+    <div class="row" style="margin-top: 24px; margin-left: 178px">
+      <div class="col-8" style="margin-left: -73px" >
+        <input type="text" class="form-control" id="item" placeholder="Enter Item Number">
+      </div>
+      <br><br>
+      <div class="col-6" >
+        <input type="text" class="form-control" id="qty" placeholder="Enter Quantity">
+      </div>
+    </div>
+    <br>
+    <label style="margin-left: 218px">OR</label>
+    <br>
+  </div>-->
+  <br>
+  <h2 style="margin-left: 530px;">Handbill Upload Utility</h2>
+  <div class="form-group" class="col-4" style="margin-top: 24px; margin-left: 118px">
+    <br>
+    <label>Imports:   </label>
+    <input style="margin-left: 29px;" type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+    <button type="button" class="btn btn-sm btn-default" (click)="clearFile()" *ngIf="fileUploadedIndicator">clear file</button><br><br>
+    <Strong>{{uploadResult}}</Strong>
+    <div class="mat-error">{{fileHeaderValidErrorMsg}}</div>
+    <div class="mat-error">{{fileEmptyErrorMsg}}</div>
+    <!--<input type="text" class="form-control" id="name" placeholder="Enter the Request Name" formControlName="name">-->
+  </div>
+  <div class="form-group" class="col-4" style="margin-top: 24px; margin-left: 118px">
+    <input type="text" class="form-control" id="name" placeholder="Enter the Request Name" formControlName="name">
+  </div>
+  <br>
+  <div class="form-group" class="col-4" style="margin-top: 24px; margin-left: 118px">
+    <button type="submit" [disabled]="_IsFileInValid || loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+  </div>
+  <br>
+  <div id="myGrid" *ngIf="loadGridData">
+    <ag-grid-angular
+      style="width:1500px; height:350px; margin-left: 13px;"
+      class="ag-theme-balham"
+      [pagination]="true"
+      (gridReady)="onGridReady($event)"
+      [enableSorting]="true"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      (rowSelected)="onRowSelected($event)">
+    </ag-grid-angular>
+  </div>
+</form>

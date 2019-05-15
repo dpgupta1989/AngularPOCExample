@@ -1,0 +1,108 @@
+<form #storeClaimsForm="ngForm">
+<div class="form-group" class="col-4">
+  <br>
+  <div class="form-control" style="margin-left: 422px">
+    <label class="radio-inline" style="margin-left: 56px">
+      <input type="radio" checked value="storeclaims" name="orderadjustment" (change) = "validateType()">
+      StoreClaims
+    </label>
+    <label class="radio-inline" style="margin-left: 118px">
+      <input type="radio" value="handbill" name="orderadjustment" (change) = "validateType()">
+      HandBill
+    </label>
+
+  </div>
+</div>
+
+  <!--<div class="form-group" class="col-4" [class.has-error]="firstName.invalid && firstName.touched">
+    <label for="firstName">Full Name</label>
+    <input required id="firstName" [(ngModel)]="storeClaims.source" name="firstName"
+           type="text" class="form-control" #firstName="ngModel">
+          <span class="help-block" *ngIf="firstName.invalid && firstName.touched">
+            Full Name is Required
+          </span>
+  </div>-->
+
+<div class="row" style="margin-top: 24px; margin-left: 118px">
+
+      <div class="form-control" class="col-4" style="margin-left: -37px" [class.has-error]="source.invalid && source.touched">
+        <label>Source</label>
+        <select required class="form-control" id="source" [(ngModel)]="storeClaims.source"
+                name="sourceControl" #source="ngModel">
+          <option [ngValue]="undefined" disabled  selected> Please select one option </option>
+          <option *ngFor="let storeclaim of storeClaims">{{storeclaim.source}}</option>
+        </select>
+        <!--selected source {{storeClaims.source}}-->
+        <span class="help-block" *ngIf="source.invalid && source.touched">
+            Source is Required
+          </span>
+      </div>
+      <div class="form-control" class="col-4" [class.has-error]="destination.invalid && destination.touched">
+        <label>Destination</label>
+        <select required class="form-control" id="destination" [(ngModel)]="storeClaims.destination"
+                name="destinationControl" #destination="ngModel">
+          <option [ngValue]="undefined" disabled  selected> Please select one option </option>
+          <option *ngFor="let storeclaim of storeClaims">
+            {{storeclaim.destination}}
+          </option>
+        </select>
+        <span class="help-block" *ngIf="destination.invalid && destination.touched">
+          Destination is required
+        </span>
+      </div>
+
+  <div class="form-control" class="col-4" [class.has-error]="requisition.invalid && requisition.touched">
+        <label>Requisition</label>
+        <select required class="form-control" id="requisition" [(ngModel)]="storeClaims.requisition"
+                name="requisitionControl" #requisition="ngModel">
+          <option [ngValue]="undefined" disabled  selected> Please select one option </option>
+          <option *ngFor="let storeclaim of storeClaims">
+            {{storeclaim.requisition}}
+          </option>
+        </select>
+        <span class="help-block" *ngIf="requisition.invalid && requisition.touched">
+            Requisition is Required
+        </span>
+      </div>
+</div>
+
+<br>
+<div class="form-control" class="col-6" style="text-align: right">
+  <!--<ngx-spinner></ngx-spinner>-->
+  <ngx-spinner
+    size = "medium"
+    color = "#9b8383"
+    type = "ball-atom">
+    <span style="color: red"> Loading...</span>
+  </ngx-spinner>
+  <button class="btn btn-primary" type="submit" [disabled]="storeClaimsForm.invalid" (click)="searchData()">Search</button>
+  <button class="btn btn-primary" type="submit" [disabled]="storeClaimsForm.invalid" (click)="openDialog(storeClaims)">Add</button>
+  <br>
+  <strong>{{dialogResult}}</strong>
+</div>
+</form>
+<br>
+<!--StoreClaims Model : {{storeClaims | json}}
+<br><br>
+Angular Generated Form Model: {{storeClaimsForm.value | json}}-->
+<br>
+<div id="myGrid" *ngIf="loadGridData">
+  <div class="test-header">
+    <span id="selectedRows"></span>
+  </div>
+  <ag-grid-angular
+    style="width:1500px; height:350px; margin-left: 13px;"
+    class="ag-theme-balham"
+    (gridReady)="onGridReady($event)"
+    [enableSorting]="true"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    (rowSelected)="onRowSelected($event)">
+  </ag-grid-angular>
+</div>
+<div class="form-control" class="col-6" style="text-align: right" *ngIf="rowSelected">
+  <br>
+  <button class="btn btn-primary" type="button" (click)="exportReportAsCsv()">Download</button>
+  <button class="btn btn-primary" type="button" (click)="deleteReport()">Delete</button>
+  <br>
+</div>
